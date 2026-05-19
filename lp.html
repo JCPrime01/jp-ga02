@@ -1,1 +1,404 @@
-<!DOCTYPE html><html><body><p>Coloque aqui o conteudo da sua LP</p></body></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Comunidade do Jota - Bilhete do Dia</title>
+
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '961619428689288');
+    fbq('track', 'PageView');
+
+    async function dispararLead() {
+      const eventId = 'Donate' + Date.now();
+      fbq('track', 'Donate', {}, { eventID: eventId });
+      await fetch('https://track-jp-production.up.railway.app/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fbp: document.cookie.match(/_fbp=([^;]+)/)?.[1] || null,
+          fbc: document.cookie.match(/_fbc=([^;]+)/)?.[1] || null,
+          userAgent: navigator.userAgent,
+          eventId: eventId
+        })
+      });
+    }
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1629271981642400&ev=PageView&noscript=1"/></noscript>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,700;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --green: #00ff88;
+            --green-dim: rgba(0,255,136,0.15);
+            --green-glow: rgba(0,255,136,0.35);
+            --orange: #ff6b00;
+            --red: #ff2d2d;
+            --bg: #080808;
+            --card: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .live-bar {
+            background: var(--red);
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .live-dot {
+            width: 7px; height: 7px;
+            background: #fff;
+            border-radius: 50%;
+            animation: blink 1s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+        .lp-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background:
+                linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.92) 60%, #080808 100%),
+                url('api-gp.webp') center/cover no-repeat fixed;
+            padding: 24px 0 32px;
+        }
+
+        .header-section { width: 100%; text-align: center; }
+
+        .jogos-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--green);
+            background: var(--green-dim);
+            border: 1px solid rgba(0,255,136,0.25);
+            border-radius: 999px;
+            padding: 5px 14px;
+            margin-bottom: 14px;
+        }
+
+        .carousel-container { display: flex; width: 100%; overflow: hidden; padding: 10px 0; }
+        .carousel-track {
+            display: flex;
+            gap: 12px;
+            animation: scroll 32s linear infinite;
+            padding-left: 12px;
+            width: max-content;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .game-card {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            min-width: 200px;
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .teams-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .team { display: flex; flex-direction: column; align-items: center; min-width: 65px; }
+        .team img { width: 32px; height: 32px; object-fit: contain; margin-bottom: 5px; }
+        .team span { font-size: 10px; font-weight: 700; white-space: nowrap; color: #ddd; }
+        .vs { font-weight: 900; color: var(--green); font-size: 13px; font-family: 'Kanit', sans-serif; }
+
+        .headline-block { padding: 0 20px; margin-top: 28px; text-align: center; }
+        .headline-sub { font-size: 13px; color: #aaa; font-weight: 500; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .headline {
+            font-family: 'Kanit', sans-serif;
+            font-size: clamp(52px, 15vw, 72px);
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            line-height: 0.88;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+        }
+        .headline .green { color: var(--green); }
+        .headline-desc {
+            font-size: 14px; color: #bbb; margin-top: 14px; line-height: 1.5;
+            max-width: 300px; margin-left: auto; margin-right: auto;
+        }
+        .headline-desc strong { color: #fff; }
+
+        .social-proof {
+            display: flex; align-items: center; justify-content: center;
+            gap: 20px; margin-top: 22px; padding: 0 20px;
+        }
+        .proof-item { text-align: center; }
+        .proof-number {
+            font-family: 'Kanit', sans-serif; font-size: 26px;
+            font-weight: 900; color: var(--green); line-height: 1;
+        }
+        .proof-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .proof-divider { width: 1px; height: 36px; background: var(--border); }
+
+        .urgency-block { margin: 22px 20px 0; }
+        .timer-box {
+            background: rgba(255,45,45,0.08);
+            border: 1px solid rgba(255,45,45,0.25);
+            border-radius: 12px; padding: 12px 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .timer-icon { font-size: 20px; flex-shrink: 0; }
+        .timer-text { font-size: 12px; color: #ccc; line-height: 1.4; }
+        .timer-text strong { color: #ff6060; }
+        .timer-countdown {
+            margin-left: auto; font-family: 'Kanit', sans-serif;
+            font-size: 22px; font-weight: 900; color: var(--red);
+            white-space: nowrap; letter-spacing: 1px;
+        }
+
+        .testimonial-strip { margin: 20px 0 0; padding: 0 20px; }
+        .testimonial-inner {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 14px 16px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .testi-item { display: flex; align-items: flex-start; gap: 10px; }
+        .testi-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--green-dim); border: 1px solid rgba(0,255,136,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0;
+        }
+        .testi-content { flex: 1; }
+        .testi-name { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .testi-msg { font-size: 11px; color: #aaa; line-height: 1.4; }
+        .testi-msg span { color: var(--green); font-weight: 600; }
+        .testi-divider { height: 1px; background: var(--border); }
+
+        .cta-middle {
+            width: 100%; padding: 24px 20px 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .alert-box {
+            width: 100%; max-width: 380px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 12px 16px;
+            margin-bottom: 14px; text-align: center;
+        }
+        .alert-box p { font-size: 12px; color: #ccc; line-height: 1.5; }
+        .alert-box span { color: var(--orange); font-weight: 700; }
+
+        .spots-bar { width: 100%; max-width: 380px; margin-bottom: 12px; }
+        .spots-header {
+            display: flex; justify-content: space-between;
+            font-size: 11px; color: #888; margin-bottom: 6px;
+        }
+        .spots-header strong { color: var(--orange); }
+        .spots-track { height: 5px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+        .spots-fill {
+            height: 100%; width: 78%;
+            background: linear-gradient(90deg, var(--orange), var(--red));
+            border-radius: 999px;
+        }
+
+        /* ── BOTÃO VERDE ── */
+        .btn-container { width: 100%; max-width: 380px; }
+        .btn-border-beam {
+            position: relative; padding: 3px;
+            border-radius: 18px; overflow: hidden;
+            display: block; text-decoration: none;
+            box-shadow: 0 0 40px rgba(0,255,136,0.55), 0 0 80px rgba(0,204,106,0.3);
+        }
+        .btn-border-beam::before {
+            content: "";
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(transparent, #00ff88, #00cc6a, #00ff88, transparent);
+            animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+        .btn-content {
+            position: relative;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 50%, #00aa55 100%);
+            color: #000;
+            padding: 20px 18px; border-radius: 16px;
+            font-size: 18px; font-weight: 900;
+            text-transform: uppercase; font-family: 'Kanit', sans-serif;
+            letter-spacing: 1.5px; display: flex; flex-direction: column;
+            align-items: center; z-index: 5; text-align: center;
+            text-shadow: none;
+            animation: pulse-btn 2s ease-in-out infinite;
+        }
+        @keyframes pulse-btn {
+            0%,100% { box-shadow: inset 0 0 0 rgba(255,255,255,0); }
+            50% { box-shadow: inset 0 0 30px rgba(255,255,255,0.2); }
+        }
+        .btn-sub {
+            font-size: 10px; font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: rgba(0,0,0,0.6);
+            text-transform: none; letter-spacing: 0; margin-top: 4px;
+        }
+
+        .cta-below {
+            font-size: 11px; color: #666;
+            text-align: center; margin-top: 10px; line-height: 1.4;
+        }
+        .cta-below span { color: #999; }
+    </style>
+</head>
+<body>
+
+    <div class="live-bar">
+        <div class="live-dot"></div>
+        Análises ao vivo · Jogos de hoje
+    </div>
+
+    <div class="lp-wrapper">
+        <div class="header-section">
+            <div class="jogos-label">⚽ Jogos do dia</div>
+
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="fluminense.21ef58d1 (1).png"><span>Fluminense</span></div><div class="vs">VS</div><div class="team"><img src="bolivar.68ee342b.png"><span>Bolívar</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="boca-juniors.009a4e59.png"><span>Boca Juniors</span></div><div class="vs">VS</div><div class="team"><img src="cruzeiro.d39bf864 (1).png"><span>Cruzeiro</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="always-ready.d109aa21.png"><span>Always Ready</span></div><div class="vs">VS</div><div class="team"><img src="mirassol.5153c341 (1).png"><span>Mirassol</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="sao-paulo.84a524e3 (1).png"><span>São Paulo</span></div><div class="vs">VS</div><div class="team"><img src="millonarios.e467e825.png"><span>Millonarios</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="fluminense.21ef58d1 (1).png"><span>Fluminense</span></div><div class="vs">VS</div><div class="team"><img src="bolivar.68ee342b.png"><span>Bolívar</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="boca-juniors.009a4e59.png"><span>Boca Juniors</span></div><div class="vs">VS</div><div class="team"><img src="cruzeiro.d39bf864 (1).png"><span>Cruzeiro</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="sao-paulo.84a524e3 (1).png"><span>São Paulo</span></div><div class="vs">VS</div><div class="team"><img src="mirassol.5153c341 (1).png"><span>Mirassol</span></div></div></div>
+                    <div class="game-card"><div class="teams-row"><div class="team"><img src="santos.6d914e21.png"><span>Santos</span></div><div class="vs">VS</div><div class="team"><img src="coritiba.d65cdfa0.png"><span>Coritiba</span></div></div></div>
+                </div>
+            </div>
+
+            <div class="headline-block">
+                <p class="headline-sub">Análise exclusiva de hoje</p>
+                <h1 class="headline">BILHETE<br><span class="green">CERTEIRO</span></h1>
+                <p class="headline-desc">Já mandei o bilhete do dia pro grupo. <strong>Acerta quem entra agora.</strong></p>
+            </div>
+
+            <div class="social-proof">
+                <div class="proof-item"><div class="proof-number">4.7k</div><div class="proof-label">No grupo</div></div>
+                <div class="proof-divider"></div>
+                <div class="proof-item"><div class="proof-number">83%</div><div class="proof-label">Acerto mês</div></div>
+                <div class="proof-divider"></div>
+                <div class="proof-item"><div class="proof-number">R$347</div><div class="proof-label">Lucro médio</div></div>
+            </div>
+
+            <!-- CTA BOTÃO VERDE -->
+            <div class="cta-middle">
+                <div class="spots-bar">
+                    <div class="spots-header">
+                        <span>Vagas hoje</span>
+                        <strong>78 de 100 preenchidas</strong>
+                    </div>
+                    <div class="spots-track"><div class="spots-fill"></div></div>
+                </div>
+
+                <div class="alert-box">
+                    <p><span>⚡ Atenção:</span> Fale comigo agora. Vou te mandar o bilhete do dia assim que você entrar no grupo — gratuito, sem enrolação.</p>
+                </div>
+
+                <div class="btn-container">
+                    <a href="https://rg.redirecionar.online/" class="btn-border-beam" onclick="dispararLead()">
+                        <span class="btn-content">
+                            🔥 PEGAR MEU BILHETE AGORA
+                            <span class="btn-sub">Acesso gratuito · Vagas limitadas</span>
+                        </span>
+                    </a>
+                </div>
+
+                <p class="cta-below"><span>🔒 100% gratuito.</span> Sem cartão, sem cadastro chato.</p>
+            </div>
+
+            <!-- TIMER -->
+            <div class="urgency-block">
+                <div class="timer-box">
+                    <div class="timer-icon">🔥</div>
+                    <div class="timer-text">
+                        <strong>Bilhete expira em:</strong><br>
+                        Depois disso não tem mais acesso
+                    </div>
+                    <div class="timer-countdown" id="timer">23:47</div>
+                </div>
+            </div>
+
+            <!-- DEPOIMENTOS -->
+            <div class="testimonial-strip">
+                <div class="testimonial-inner">
+                    <div class="testi-item">
+                        <div class="testi-avatar">M</div>
+                        <div class="testi-content">
+                            <div class="testi-name">Marcos R. · há 18 min</div>
+                            <div class="testi-msg">Entrei hoje e já <span>bati R$220</span> no primeiro bilhete 🤑</div>
+                        </div>
+                    </div>
+                    <div class="testi-divider"></div>
+                    <div class="testi-item">
+                        <div class="testi-avatar">A</div>
+                        <div class="testi-content">
+                            <div class="testi-name">Ana C. · há 42 min</div>
+                            <div class="testi-msg">Terceira semana seguida no verde. <span>Melhor decisão do ano.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startTimer() {
+            const saved = sessionStorage.getItem('lp_timer_end');
+            let end;
+            if (saved) {
+                end = parseInt(saved);
+            } else {
+                const minutes = Math.floor(Math.random() * 9) + 18;
+                end = Date.now() + minutes * 60 * 1000;
+                sessionStorage.setItem('lp_timer_end', end);
+            }
+            const el = document.getElementById('timer');
+            function tick() {
+                const diff = end - Date.now();
+                if (diff <= 0) { el.textContent = '00:00'; return; }
+                const m = Math.floor(diff / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+                requestAnimationFrame(tick);
+            }
+            tick();
+        }
+        startTimer();
+    </script>
+
+</body>
+</html>
