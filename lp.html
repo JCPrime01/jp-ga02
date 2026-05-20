@@ -14,13 +14,13 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '961619428689288');
+    fbq('init', '1629271981642400');
     fbq('track', 'PageView');
 
     async function dispararLead() {
       const eventId = 'Donate' + Date.now();
       fbq('track', 'Donate', {}, { eventID: eventId });
-      await fetch('https://track-jp-production.up.railway.app/api/lead', {
+      await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
