@@ -19,7 +19,7 @@
 
     async function dispararLead() {
       const eventId = 'Donate' + Date.now();
-      fbq('track', 'Donate', {}, { eventID: eventId });
+      fbq('track', 'Lead', {}, { eventID: eventId });
       await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
